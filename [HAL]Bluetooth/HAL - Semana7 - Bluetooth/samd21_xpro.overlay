@@ -1,0 +1,24 @@
+/ {
+    chosen {
+        zephyr,bt-hci = &btlc1000;
+    };
+};
+
+&sercom1 {
+    status = "okay";
+    compatible = "zephyr,bt-hci-uart";
+    current-speed = <115200>;
+    hw-flow-control;
+
+    rx-pin = <3>;   // EXT1 PIN 17
+    tx-pin = <2>;   // EXT1 PIN 15
+    rts-pin = <7>;  // EXT1 PIN 13
+    cts-pin = <6>;  // EXT1 PIN 11
+};
+
+btlc1000: btlc1000 {
+    compatible = "atmel,btlc1000";
+    hci-uart = <&sercom1>;
+    enable-gpios = <&porta 14 GPIO_ACTIVE_HIGH>; // EXT1 pin 4
+};
+
